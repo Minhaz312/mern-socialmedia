@@ -17,7 +17,7 @@ const server = http.createServer(app);
 
 app.use(express.json())
 
-app.use(cors({origin:"*"}))
+app.use(cors({origin:["https://tubebook.netlify.app","http://localhost:5173"]}))
 
 main().then(console.log("database runnig...")).catch(err => console.log(err));
 
@@ -33,7 +33,7 @@ async function main() {
 }
 
 const io = new Server(server,{
-  cors:{origin:"*"}
+  cors:{origin:"https://tubebook.netlify.app"}
 })
 io.on("connection",(socket)=>{
   socketManager(socket)
