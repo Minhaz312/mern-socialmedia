@@ -22,9 +22,10 @@ app.use(cors({origin:"*"}))
 main().then(console.log("database runnig...")).catch(err => console.log(err));
 
 async function main() {
-  if(process.env.NODE_ENV == "production"){
+  const production = true;
+  if(process.env.NODE_ENV == "production" || production){
     console.log('runing on production')
-    await mongoose.connect('mongodb://127.0.0.1:27017/tubebook');
+    await mongoose.connect(process.env.MONGODB_URL);
   }else{
     console.log('runing on development')
     await mongoose.connect('mongodb://127.0.0.1:27017/onemedia');
@@ -32,7 +33,7 @@ async function main() {
 }
 
 const io = new Server(server,{
-  cors:{origin:"http://localhost:5173"}
+  cors:{origin:"*"}
 })
 io.on("connection",(socket)=>{
   socketManager(socket)
