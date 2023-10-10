@@ -17,7 +17,7 @@ const server = http.createServer(app);
 
 app.use(express.json())
 
-app.use(cors({origin:["https://tubebook.netlify.app","https://tubebook.vercel.app","http://localhost:5173"]}))
+app.use(cors({origin:"https://tubebook.vercel.app"}))
 
 main().then(console.log("database runnig...")).catch(err => console.log(err));
 
