@@ -17,12 +17,12 @@ const server = http.createServer(app);
 
 app.use(express.json())
 
-app.use(cors({origin:["https://tubebook.netlify.app","http://localhost:5173"]}))
+app.use(cors({origin:["https://tubebook.netlify.app","https://tubebook.vercel.app","http://localhost:5173"]}))
 
 main().then(console.log("database runnig...")).catch(err => console.log(err));
 
 async function main() {
-  const production = true;
+  const production = false;
   if(process.env.NODE_ENV == "production" || production){
     console.log('runing on production')
     await mongoose.connect(process.env.MONGODB_URL);
@@ -33,8 +33,9 @@ async function main() {
 }
 
 const io = new Server(server,{
-  cors:{origin:"https://tubebook.netlify.app"}
+  cors:{origin:["https://tubebook.netlify.app","https://tubebook.vercel.app","http://localhost:5173"]}
 })
+io
 io.on("connection",(socket)=>{
   socketManager(socket)
 })
