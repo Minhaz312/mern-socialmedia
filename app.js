@@ -33,7 +33,7 @@ async function main() {
 }
 
 const io = new Server(server,{
-  cors:{origin:["https://tubebook.netlify.app","https://tubebook.vercel.app"]}
+  cors:{origin:"https://tubebook.vercel.app"}
 })
 io
 io.on("connection",(socket)=>{
