@@ -3,7 +3,7 @@ import {io} from 'socket.io-client'
 class SocketManager {
     constructor(){
         if(!this.socket){
-            this.socket = io("ws://localhost:8080");
+            this.socket = io("https://tubebook.onrender.com"); // ws://localhost:8080
         }
     }
     getSocket() {
