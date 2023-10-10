@@ -22,7 +22,7 @@ app.use(cors({origin:["https://tubebook.netlify.app","https://tubebook.vercel.ap
 main().then(console.log("database runnig...")).catch(err => console.log(err));
 
 async function main() {
-  const production = false;
+  const production = true;
   if(process.env.NODE_ENV == "production" || production){
     console.log('runing on production')
     await mongoose.connect(process.env.MONGODB_URL);
