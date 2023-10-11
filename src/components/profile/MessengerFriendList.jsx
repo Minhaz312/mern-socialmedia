@@ -51,7 +51,7 @@ export default function MessengerFriendList() {
         </div>
         <div className='px-2'>
             {
-            data.data.map((contact,i)=><ContactItem key={i} contact={contact} onClick={handleSelectFriendToChat.bind(this,contact)} />)
+            data.data.map((contact,i)=>contact.accepted&&<ContactItem key={i} contact={contact} onClick={handleSelectFriendToChat.bind(this,contact)} />)
             }
             <div className='w-full mt-5 flex justify-center items-center'>
               <button className='blue-btn'>load more</button>

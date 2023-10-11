@@ -1,3 +1,3 @@
-export default function TabItem({children}) {
-    return <>{children}</>
+export default function TabItem({children,onTabClick=()=>{}}) {
+    return <div onTabClick={()=>onClick}>{children}</div>
 }

@@ -59,30 +59,29 @@ export default function Profile() {
       else setShowProfileNavOptionModal(true)
     }
     const ProfileNavigationList = () => {
-      return profileNaviations.map((item,i)=><TopTabButton key={i} onClick={()=>setActiveTab(item.name.toLowerCase())} active={activeTab===item.name.toLowerCase()?true:false}>
+      return profileNaviations.map((item,i)=><Link to={`/profile/${item.name.toLowerCase()}`}>
+        <TopTabButton key={i} onClick={()=>setActiveTab(item.name.toLowerCase())} active={activeTab===item.name.toLowerCase()?true:false}>
           {item.icon()}
           <span>{item.name}</span>
-        </TopTabButton>)
+        </TopTabButton>
+      </Link>)
     }
   return (
     <Layout>
       <Modal show={showProfileNavOptionModal} title='Navigation' footer={false} onHide={handleShowProfileNavOptionModal}>
           <div className=''>
-            <div onClick={()=>{
-              setActiveTab("profile")
-              handleShowProfileNavOptionModal()
-            }} className={`w-full p-3 ${activeTab==="profile"?"bg-slate-100 dark:bg-slate-950":"bg-primary dark:bg-secondary-1"} hover:bg-slate-950 transition-all cursor-pointer text-slate-300 border-b dark:border-b-slate-700 border-b-slate-600 mb-2 flex items-center gap-x-3 text-base font-semibold`}>
+            <Link to={"/profile/profile"} className={`w-full p-3 ${activeTab==="profile"?"bg-slate-100 dark:bg-slate-950":"bg-white dark:bg-secondary-1"} hover:bg-primary dark:hover:bg-slate-950 transition-all cursor-pointer text-slate-600 dark:text-slate-300 border-b dark:border-b-slate-700 border-b-slate-300 mb-2 flex items-center gap-x-3 text-base font-semibold`}>
               <BiUser />
               <p>Profile</p>
-            </div>
+            </Link>
             {
-              profileNaviations.map((item,i)=><div key={i} onClick={()=>{
+              profileNaviations.map((item,i)=><Link to={`/profile/${item.name.toLowerCase()}`} key={i} onClick={()=>{
                 setActiveTab(item.name.toLowerCase())
                 handleShowProfileNavOptionModal()
-                }} className={`w-full p-3 ${activeTab===item.name.toLowerCase()?"bg-slate-100 dark:bg-slate-950":"bg-primary dark:bg-secondary-1"} hover:bg-slate-950 transition-all cursor-pointer text-slate-300 border-b dark:border-b-slate-700 border-b-slate-600 mb-2 flex items-center gap-x-3 text-base font-semibold`}>
+                }} className={`w-full p-3 ${activeTab===item.name.toLowerCase()?"bg-slate-100 dark:bg-slate-950":"bg-white dark:bg-secondary-1"} hover:bg-primary dark:hover:bg-slate-950 transition-all cursor-pointer text-slate-600 dark:text-slate-300 border-b dark:border-b-slate-700 border-b-slate-300 mb-2 flex items-center gap-x-3 text-base font-semibold`}>
                 <p>{item.icon()}</p>
                 <p>{item.name}</p>
-              </div>)
+              </Link>)
             }
           </div>
       </Modal>
@@ -96,7 +95,7 @@ export default function Profile() {
                 <div className='flex flex-wrap gap-x-3 gap-y-2 lg:hidden'>
                   {profileNaviations.map((item,i)=>{
                     if(item.responsiveTab){
-                      return <Link to={`/profile/${item.name.toLowerCase()}`} className={`px-2 ${activeTab===item.name.toLowerCase()?"text-blue-600":"text-white"} flex justify-center items-center blue-btn`} active={activeTab==="profile"?true:false}>
+                      return <Link key={i} to={`/profile/${item.name.toLowerCase()}`} className={`px-2 ${activeTab===item.name.toLowerCase()?"text-blue-600":"text-slate-600 dark:text-white"} flex justify-center items-center blue-btn`} active={activeTab==="profile"?true:false}>
                       {item.icon()}
                     </Link>
                     }
@@ -107,10 +106,12 @@ export default function Profile() {
                 </div>
                 <div className='hidden flex-wrap gap-x-3 gap-y-2 lg:flex'>
                   <div className='block xl:hidden'>
-                    <TopTabButton onClick={()=>setActiveTab("profile")} active={activeTab==="profile"?true:false}>
-                      <BiUser />
-                      <span>Profile</span>
-                    </TopTabButton>
+                    <Link to="/profile/profile">
+                      <TopTabButton onClick={()=>setActiveTab("profile")} active={activeTab==="profile"?true:false}>
+                        <BiUser />
+                        <span>Profile</span>
+                      </TopTabButton>
+                    </Link>
                   </div>
                   <ProfileNavigationList />
                 </div>

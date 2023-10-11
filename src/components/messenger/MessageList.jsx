@@ -44,13 +44,22 @@ export default function MessageList() {
     const friendChatBox = chatList.filter(friend=>friend.friendId===chatFriend.friendId)[0]
     if(friendChatBox.messageList.length<1){
         return (
-          <div className='p-3 h-full w-full flex justify-center items-center overflow-hidden'>
-            no message found
-          </div>
+            <div className='h-[90%]'>
+                <div className='p-3 h-full w-full flex justify-center items-center overflow-hidden'>
+                    no message found
+                </div>
+                {isTyping&&(<div className='flex gap-x-2 items-center'>
+                    {chatFriend.friend_image!==null&&(<img src={chatFriend.friend_image} className='h-[35px] w-[35px] rounded-full' />)}
+                        {chatFriend.friend_image===null&&(<div className='h-10 w-10 bg-primary border border-slate-500 uppercase text-md font-semibold dark:bg-secondary-1 rounded-full flex justify-center items-center'>
+                            {chatFriend.friend_name.substring(0,2)}
+                    </div>)}
+                    <p className='dark:text-slate-300 text-slate-600'>typing...</p>
+                </div>)}
+            </div>
         )
     }
   return (
-    <div ref={messageBoxListDiv} className='p-3'>
+    <div ref={messageBoxListDiv} className='min-h-[90%] p-3'>
         {
             friendChatBox.messageList.map((item,i)=>{
                 const showProfile = i>0?friendChatBox.messageList[i-1].userId.toString()===item.userId.toString()?false:true:true

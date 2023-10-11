@@ -11,7 +11,6 @@ const TabBody = ({children}) =>{
 export default function Tabs({children,className="",activeClasseName=""}) {
     const [activeIndex, setActiveIndex] = useState(0)
     const tabsChildList = React.Children.toArray(children);
-    console.log("tabsChildList: ",tabsChildList)
     const classes = `w-full grid grid-cols-${tabsChildList.length} text-center border-b border-slate-500 mb-3`
     const activeHeaderClass = i =>{
         if(i===activeIndex){
@@ -25,7 +24,10 @@ export default function Tabs({children,className="",activeClasseName=""}) {
             <div className={`w-full ${className} text-center border-b border-slate-500 mb-3`}>
                 {
                     tabsChildList.map((tab,i)=>{
-                        return <div key={i} onClick={()=>setActiveIndex(i)} className={`cursor-pointer ${activeHeaderClass(i)} py-2 inline-block`}>
+                        return <div key={i} onClick={()=>{
+                            setActiveIndex(i)
+                            tab.props.onTabClick()
+                            }} className={`cursor-pointer ${activeHeaderClass(i)} py-2 inline-block`}>
                             {tab.props.label}
                         </div>
                     })

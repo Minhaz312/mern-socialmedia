@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import InboxTobBar from '../messenger/InboxTobBar'
 import MessageList from '../messenger/MessageList'
 import { BsSendFill } from 'react-icons/bs'
@@ -11,6 +11,7 @@ import { BiImageAdd } from 'react-icons/bi'
 import { FaFileUpload } from 'react-icons/fa'
 
 export default function Inbox() {
+  const inputRef = useRef(null)
   const [message, setMessage] = useState("")
   const activeMessengerFriend = useSelector(state=>state.chatList.inboxActivefriend)
   const chatList = useSelector(state=>state.chatList)
@@ -31,6 +32,9 @@ export default function Inbox() {
           }else{
             console.log('chat list undefined')
           }
+        }
+        if(inputRef.current!==null) {
+          inputRef.current.focus()
         }
         setMessage("")
       }
@@ -54,7 +58,7 @@ export default function Inbox() {
             <FaFileUpload />
           </label>
           <div className='w-full flex bg-primary dark:bg-secondary-1 px-3 py-3 rounded-xl'>
-            <input type='text' value={message} onChange={handleChangeMessageInput} className='w-full bg-primary dark:bg-secondary-1 outline-none border-none' placeholder='Aa...' />
+            <input ref={inputRef} type='text' value={message} onChange={handleChangeMessageInput} className='w-full bg-primary dark:bg-secondary-1 outline-none border-none' placeholder='Aa...' />
             <button className='text-[20px] text-slate-400' onClick={handleSendMessage}><BsSendFill /></button>
         </div>
         </div>

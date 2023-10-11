@@ -98,13 +98,13 @@ export default function TopBar() {
         </div>
         <div className='flex items-center gap-x-1 md:gap-x-3'>
           <div className='block md:hidden'>
-            <button className={`relative w-[35px] h-[35px] rounded-full text-[25px] p-2 flex justify-center items-center transition-all ${showMobileSearch?"bg-blue-500/20 ring-1 text-blue-500":"text-slate-300 bg-slate-700"} hover:bg-blue-500/20 hover:ring-1 hover:text-blue-500`} onClick={handleShowMobileSearch}><BiSearch size={20} /></button>
+            <button className={`relative w-[35px] h-[35px] rounded-full text-[25px] p-2 flex justify-center items-center transition-all ${showMobileSearch?"bg-blue-500/20 ring-1 text-blue-500":"text-slate-600 dark:bg-slate-700 bg-primary"} hover:bg-blue-500/20 hover:ring-1 hover:text-blue-500`} onClick={handleShowMobileSearch}><BiSearch size={20} /></button>
           </div>
           <div className=''>
-            <Link to="/profile/messenger" className={`relative w-[35px] h-[35px] rounded-full text-[25px] p-2 flex justify-center items-center transition-all ${showMobileSearch?"bg-blue-500/20 ring-1 text-blue-500":"text-slate-300 bg-slate-700"} hover:bg-blue-500/20 hover:ring-1 hover:text-blue-500`}><BsChatDotsFill size={20} /></Link>
+            <Link to="/profile/messenger" className={`relative w-[35px] h-[35px] rounded-full text-[25px] p-2 flex justify-center items-center transition-all ${location.pathname==="/profile/messenger"?"bg-blue-500/20 ring-1 text-blue-500":"dark:bg-slate-700 bg-primary text-slate-600"} hover:bg-blue-500/20 hover:ring-1 hover:text-blue-500`}><BsChatDotsFill size={20} /></Link>
           </div>
           <div className='relative' >
-            <button onClick={handleShowNotificationList} className={`relative w-[35px] h-[35px] rounded-full text-[25px] p-2 flex justify-center items-center transition-all ${showNotificationList?"bg-blue-500/20 ring-1 text-blue-500":"text-slate-300 bg-slate-700"} hover:bg-blue-500/20 hover:ring-1 hover:text-blue-500`}>
+            <button onClick={handleShowNotificationList} className={`relative w-[35px] h-[35px] rounded-full text-[25px] p-2 flex justify-center items-center transition-all ${showNotificationList?"bg-blue-500/20 ring-1 text-blue-500":"text-slate-600 dark:bg-slate-700 bg-primary"} hover:bg-blue-500/20 hover:ring-1 hover:text-blue-500`}>
               <IoNotifications />
               <div className='bg-red-500 text-white font-bold text-[12px] absolute -top-1 -right-1 h-[17px] w-[17px] rounded-full'>{totalUnreadNotification.length}</div>
               </button>

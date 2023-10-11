@@ -7,6 +7,9 @@ import TabItem from "./../../components/cs-ui-components/TabItem"
 
 export default function Signin() {
   const route = useNavigate()
+
+  const [tabTitle, setTabTitle] = useState("Login into account")
+
   const [username,setUsername] = useState("")
   const [mail,setMail] = useState("")
   const [password,setPassword] = useState("")
@@ -60,21 +63,23 @@ export default function Signin() {
   }else{
     return (
       <div className='h-screen bg-primary dark:bg-secondary-1 w-full flex justify-center items-center'>
-        <div className='bg-white dark:bg-secondary-2 p-5 shadow rounded-md siginin-shadow w-[30%] min-h-[400px] h-auto'>
-          <h3 className='my-5 font-bold text-center'>Login Form</h3>
+        <div className='bg-white dark:bg-secondary-2 p-5 shadow rounded-md siginin-shadow w-[90%] min-h-[400px] h-auto xl:w-[30%] lg:w-[35%] md:w-[50%] sm:w-[75%]'>
+          <h3 className='my-5 font-bold text-center'>{tabTitle}</h3>
           {/* <div className='grid grid-cols-2 my-3'>
             <div className={`text-center uppercase font-bold text-slate-600 dark:text-slate-300 px-3 py-2 ${login?"bg-slate-700":"bg-transparent"} rounded`}>SIGNIN</div>
             <div className={`text-center uppercase font-bold text-slate-600 dark:text-slate-300 px-3 py-2 ${login===false?"bg-slate-700":"bg-transparent"} rounded`}>SIGNUP</div>
           </div> */}
           <Tabs className='grid grid-cols-2' activeClasseName="font-semibold border-b-[3px] text-blue-500 border-blue-500">
-            <TabItem label="Login">
+            <TabItem label="Login" onTabClick={()=>{
+              setTabTitle("Login into account")
+            }}>
               <div>
                 <input type='text' value={mail} onChange={e=>setMail(e.target.value)} className='w-full bg-primary dark:bg-secondary-1 dark:text-slate-300 outline-none focus:border-slate-500 py-2 px-2.5 mb-3 rounded' placeholder='Enter Mail' />
                 <input type='text' value={password} onChange={e=>setPassword(e.target.value)} className='w-full bg-primary dark:bg-secondary-1 dark:text-slate-300 outline-none focus:border-slate-500 py-2 px-2.5 mb-3 rounded' placeholder='Enter Password' />
                 <button className='btn w-full bg-blue-900 hover:bg-blue-950 my-5 text-white font-semibold' onClick={handleSignin}>{logining?"Authenticating...":"Login"}</button>
               </div>
             </TabItem>
-            <TabItem label="SignUp">
+            <TabItem label="SignUp" onTabClick={()=>setTabTitle("Create an account")}>
                 <input type='text' value={username} onChange={e=>setUsername(e.target.value)} className='w-full bg-primary dark:bg-secondary-1 dark:text-slate-300 outline-none focus:border-slate-500 py-2 px-2.5 mb-3 rounded' placeholder='Enter Name' />
                 <input type='text' value={mail} onChange={e=>setMail(e.target.value)} className='w-full bg-primary dark:bg-secondary-1 dark:text-slate-300 outline-none focus:border-slate-500 py-2 px-2.5 mb-3 rounded' placeholder='Enter Mail' />
                 <input type='text' value={password} onChange={e=>setPassword(e.target.value)} className='w-full bg-primary dark:bg-secondary-1 dark:text-slate-300 outline-none focus:border-slate-500 py-2 px-2.5 mb-3 rounded' placeholder='Enter Password' />

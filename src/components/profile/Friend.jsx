@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import UserProfileImageRenderer from '../common/navigation/UserProfileImageRenderer'
 import {BiSearch} from "react-icons/bi"
-import { acceptFriendshipRequest, rejectFriendRequest } from '../../api/user/friendship/friendship';
+import { acceptFriendshipRequest, makeUnfriend, rejectFriendRequest } from '../../api/user/friendship/friendship';
 import { Link } from 'react-router-dom';
 
 export default function Friend({friend,renderAsList}) {
@@ -22,7 +22,7 @@ export default function Friend({friend,renderAsList}) {
     const handleUnfriend = async () => {
         const res = await makeUnfriend(friend.friendId)
         if(res) {
-            const newItem = {...people,accepted:null}
+            const newItem = {...friend,accepted:null}
             setFriendData(newItem)
         }
     }

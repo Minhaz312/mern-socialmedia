@@ -10,6 +10,7 @@ import { FaBars } from 'react-icons/fa'
 export default function Layout({children}) {
 
   const [showSidebar, setShowSidebar] = useState(false)
+  const [notificationList, setNotificationList] = useState([])
 
   const handleShowSidebar = () => {
     if(showSidebar) setShowSidebar(false)

@@ -27,7 +27,7 @@ export default function FriendRequestNotificationItem({noti}) {
             {notification.type==="connection-request"&&<BiSolidUserPlus />}
             </div>
             <Link to={`/people/${notification.actionId}`}>
-                <p className={`${notification.seen?"text-slate-300/90":"text-slate-200"}`}>{notification.title}</p>
+                <p className={`text-slate-700 dark:text-slate-200`}>{notification.title}</p>
                 <p className='font-semibold text-blue-700'>{timeago}</p>
             </Link>
         </div>
@@ -42,12 +42,12 @@ export default function FriendRequestNotificationItem({noti}) {
             </div>
             <div>
             <h1 to={`/people/${notification.actionId}`} className='cursor-pointer' onClick={handleMarkNotificationAsSeen}>
-                <p className={`${notification.seen?"text-slate-300/90":"text-slate-200"}`}>{notification.title}</p>
+                <p className={`text-slate-600 dark:text-slate-200`}>{notification.title}</p>
                 <p className='font-semibold text-blue-700'>{timeago}</p>
             </h1>
             {notification.actionTaken===false&&<div className='w-full flex gap-x-3 mt-3'>
-                <button className='px-2 py-1 font-semibold text-sm bg-sky-600 rounded-lg' onClick={handleConnect}>Connect</button>
-                <button className='px-2 py-1 font-semibold text-sm bg-slate-500 rounded-lg'>Reject</button>
+                <button className='px-2 py-1 font-semibold text-sm bg-sky-600 text-white rounded' onClick={handleConnect}>Connect</button>
+                <button className='px-2 py-1 font-semibold text-sm bg-slate-500 text-white rounded'>Reject</button>
             </div>}
             </div>
         </div>
