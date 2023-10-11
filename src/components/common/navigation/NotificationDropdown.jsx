@@ -15,7 +15,7 @@ export default function NotificationDropdown({show,data}) {
       <h6 className='mb-3 font-semibold text-slate-500'>Notifications</h6>
       {
         data.length>0?data.map((noti,i)=><div key={i} className={`${i!==data.length-1&&"border-b border-slate-200 dark:border-slate-600"} mb-3`}>
-          <div className={`w-full ${noti.seen?"bg-transparent":"dark:bg-secondary-1 hover:bg-primary"} p-2 mb-2 rounded-xl`}>
+          <div className={`w-full ${noti.seen?"bg-transparent":"dark:hover:bg-secondary-1 hover:bg-primary"} p-2 mb-2 rounded-xl`}>
             <FriendRequestNotificationItem key={i} noti={noti} />
           </div>
         </div>):<div>

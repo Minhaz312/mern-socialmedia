@@ -21,20 +21,17 @@ export default function MessageList() {
             console.log('tying evnt: ',data)
             if(data.userId.toString()===chatFriend.friendId.toString()){
                 setIsTyping(true)
-                if(messageBoxListDiv.current!==null) {
-                    messageBoxListDiv.current.scrollIntoView({behavior:"smooth",block:"end"})
-                }
             }
         })
         socket.getSocket().on(`${user}-chat-friend`,data=>{
             console.log('tying evnt: ',data)
             if(data.userId.toString()===chatFriend.friendId.toString()){
                 setIsTyping(false)
-                if(messageBoxListDiv.current!==null) {
-                    messageBoxListDiv.current.scrollIntoView({behavior:"smooth",block:"end"})
-                }
             }
         })
+        if(messageBoxListDiv.current!==null) {
+            messageBoxListDiv.current.scrollIntoView({behavior:"smooth",block:"end"})
+        }
     },[socket.getSocket()])
     useEffect(()=>{
         if(messageBoxListDiv.current!==null) {
@@ -48,13 +45,13 @@ export default function MessageList() {
                 <div className='p-3 h-full w-full flex justify-center items-center overflow-hidden'>
                     no message found
                 </div>
-                {isTyping&&(<div className='flex gap-x-2 items-center'>
+                <div className={`gap-x-2 items-center ${isTyping?"flex":"hidden"}`}>
                     {chatFriend.friend_image!==null&&(<img src={chatFriend.friend_image} className='h-[35px] w-[35px] rounded-full' />)}
                         {chatFriend.friend_image===null&&(<div className='h-10 w-10 bg-primary border border-slate-500 uppercase text-md font-semibold dark:bg-secondary-1 rounded-full flex justify-center items-center'>
                             {chatFriend.friend_name.substring(0,2)}
                     </div>)}
                     <p className='dark:text-slate-300 text-slate-600'>typing...</p>
-                </div>)}
+                </div>
             </div>
         )
     }
@@ -89,13 +86,13 @@ export default function MessageList() {
                 </div>
             })
         } 
-        {isTyping&&(<div className='flex gap-x-2 items-center'>
+        <div className={`gap-x-2 items-center ${isTyping?"flex":"hidden"}`}>
             {chatFriend.friend_image!==null&&(<img src={chatFriend.friend_image} className='h-[35px] w-[35px] rounded-full' />)}
                 {chatFriend.friend_image===null&&(<div className='h-10 w-10 bg-primary border border-slate-500 uppercase text-md font-semibold dark:bg-secondary-1 rounded-full flex justify-center items-center'>
                     {chatFriend.friend_name.substring(0,2)}
             </div>)}
             <p className='dark:text-slate-300 text-slate-600'>typing...</p>
-        </div>)}
+        </div>
     </div>
   )
 }

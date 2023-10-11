@@ -17,6 +17,10 @@ export default function Inbox() {
   const chatList = useSelector(state=>state.chatList)
   const dispatch = useDispatch()
     const handleSendMessage = async () => {
+      if(inputRef.current!==null) {
+        inputRef.current.focus()
+      }
+      setMessage("")
       if(message.trim()!==""){
         const data = {friendId:activeMessengerFriend.friendId,message}
         const res = await sendMessage(data);
@@ -33,10 +37,6 @@ export default function Inbox() {
             console.log('chat list undefined')
           }
         }
-        if(inputRef.current!==null) {
-          inputRef.current.focus()
-        }
-        setMessage("")
       }
     }
 

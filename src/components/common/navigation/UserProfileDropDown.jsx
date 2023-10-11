@@ -16,17 +16,17 @@ export default function UserProfileDropDown({show,data}) {
           <h5>{data.username}</h5>
         </Link>
       </div>
-      <button className='w-full text-[18px] p-2 rounded-xl flex justify-between items-center font-semibold border-b mb-2 text-slate-900 dark:text-white dark:hover:bg-slate-700 hover:bg-primary' onClick={()=>logoutUser(()=>{})}>
-        <p>Logout</p>
-        <FiLogOut />
-      </button>
-      <button className='w-full text-[18px] p-2 rounded-xl flex justify-between items-center font-semibold border-b mb-2 text-slate-900 dark:text-white dark:hover:bg-slate-700 hover:bg-primary' onClick={()=>logoutUser(()=>{})}>
+      <button className='w-full text-[18px] px-2 py-3 rounded flex justify-between items-center font-semibold border-b border-slate-300 dark:border-slate-600 mb-2 text-slate-900 dark:text-white dark:hover:bg-slate-700 hover:bg-primary' onClick={()=>logoutUser(()=>{})}>
         <p>Dark Theme</p>
         <MdDarkMode />
       </button>
-      <button className='w-full text-[18px] p-2 rounded-xl flex justify-between items-center font-semibold border-b mb-2 text-slate-900 dark:text-white dark:hover:bg-slate-700 hover:bg-primary' onClick={()=>logoutUser(()=>{})}>
+      <button className='w-full text-[18px] px-2 py-3 rounded flex justify-between items-center font-semibold border-b border-slate-300 dark:border-slate-600 mb-2 text-slate-900 dark:text-white dark:hover:bg-slate-700 hover:bg-primary' onClick={()=>logoutUser(()=>{})}>
         <p>Ligth Theme</p>
         <MdOutlineLightMode />
+      </button>
+      <button className='w-full text-[18px] px-2 py-3 rounded flex justify-between items-center font-semibold mb-2 text-slate-900 dark:text-white dark:hover:bg-slate-700 hover:bg-primary' onClick={()=>logoutUser(()=>{})}>
+          <p>Logout</p>
+          <FiLogOut />
       </button>
     </div>
   )
