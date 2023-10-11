@@ -32,7 +32,7 @@ export default function Layout({children}) {
     return <Navigate to="/" replace={true} />
   }else{
     return (
-      <div className='bg-[#f4f7fb] dark:text-primary dark:bg-secondary-1 h-screen w-full overflow-hidden flex flex-col justify-between'>
+      <div className='bg-[#f4f7fb] dark:text-primary dark:bg-secondary-1 h-full w-full overflow-hidden flex flex-col justify-between'>
           <div className='flex bg-white dark:bg-secondary-2 items-center shadow dark:shadow-slate-600 dark:shadow-sm'>
             <button className='border-0 outline-none ps-3' onClick={handleShowSidebar}><FaBars /></button>
             <TopBar />

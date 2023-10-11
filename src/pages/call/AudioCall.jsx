@@ -3,7 +3,7 @@ import Layout from '../../components/common/Layout'
 import { useSelector } from 'react-redux'
 import { BiLeftArrowAlt, BiVolumeFull } from 'react-icons/bi'
 import { MdKeyboardVoice } from 'react-icons/md'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 export default function AudioCall() {
     const navigate = useNavigate()
@@ -14,7 +14,7 @@ export default function AudioCall() {
   return (
     <Layout>
         <div className='h-full w-full overflow-hidden'>
-        <button className='px-3 py-1' onClick={handleGoBack}><BiLeftArrowAlt size={25} /></button>
+        <Link to="/profile/messenger" className='px-3 py-1' ><BiLeftArrowAlt size={25} /></Link>
             {friend!==undefined&&(<div className='h-full w-full flex justify-center items-center flex-col'>
                 <div>
                     <div className='flex mx-auto justify-center items-center h-[130px] w-[130px] md:h-[200px] md:w-[200px] rounded-full bg-secondary-2 mb-5'>

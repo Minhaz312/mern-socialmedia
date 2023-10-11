@@ -20,26 +20,32 @@ import { IoMdSettings } from 'react-icons/io'
 import Settings from '../../components/profile/Settings'
 import Modal from '../../components/cs-ui-components/modal/Modal'
 import { FiUsers } from 'react-icons/fi'
+import { Link, useParams } from 'react-router-dom'
 
 const profileNaviations = [
-  {name:"Recent",icon:()=><AiFillClockCircle />},
-  {name:"Videos",icon:()=><BiSolidVideos />},
-  {name:"PlayList",icon:()=><LuListVideo />},
-  {name:"Posts",icon:()=><BsPostcardHeartFill />},
-  {name:"Connections",icon:()=><FaUserFriends />},
-  {name:"Messenger",icon:()=><BsChatDotsFill />},
-  {name:"Notifications",icon:()=><BsBellFill />},
-  {name:"Settings",icon:()=><IoMdSettings />},
+  {name:"Recent",responsiveTab:false,icon:()=><AiFillClockCircle />},
+  {name:"Videos",responsiveTab:true,icon:()=><BiSolidVideos />},
+  {name:"PlayList",responsiveTab:false,icon:()=><LuListVideo />},
+  {name:"Posts",responsiveTab:true,icon:()=><BsPostcardHeartFill />},
+  {name:"Connections",responsiveTab:false,icon:()=><FaUserFriends />},
+  {name:"Notifications",responsiveTab:true,icon:()=><BsBellFill />},
+  {name:"Settings",responsiveTab:false,icon:()=><IoMdSettings />},
 ]
 
 export default function Profile() {
-    
+  
+    const {tab:profileTab} = useParams()
+
     const {error,isLoading,data} = useGetAuthUserQuery()
-    const [activeTab, setActiveTab] = useState('recent')
+    const [activeTab, setActiveTab] = useState(profileTab)
 
     const [showProfileNavOptionModal,setShowProfileNavOptionModal] = useState(false)
 
-    
+    useEffect(()=>{
+      if(activeTab!==profileTab){
+        setActiveTab(profileTab)
+      }
+    },[profileTab])
     if(isLoading){
       return (
         <Layout>
@@ -88,6 +94,13 @@ export default function Profile() {
             <div className='bg-white dark:bg-secondary-2 shadow-sm p-2 flex justify-between items-center gap-x-3 gap-y-2'>
                 <p className="capitalize font-semibold text-slate-200">{activeTab}</p>
                 <div className='flex flex-wrap gap-x-3 gap-y-2 lg:hidden'>
+                  {profileNaviations.map((item,i)=>{
+                    if(item.responsiveTab){
+                      return <Link to={`/profile/${item.name.toLowerCase()}`} className={`px-2 ${activeTab===item.name.toLowerCase()?"text-blue-600":"text-white"} flex justify-center items-center blue-btn`} active={activeTab==="profile"?true:false}>
+                      {item.icon()}
+                    </Link>
+                    }
+                  })}
                   <button className='px-2 py-1' onClick={handleShowProfileNavOptionModal}>
                     <FaBars />
                   </button>
@@ -105,9 +118,6 @@ export default function Profile() {
             {activeTab==="profile"&&(<div className='h-full block md:hidden overflow-x-hidden overflow-y-auto'>
               <ProfileTabItem data={data.data} />
             </div>)}
-            {/* <div className='h-full overflow-x-hidden overflow-y-auto'>
-
-            </div> */}
             {activeTab==="recent"&&(<RecentTabItem data={{}} />)}
             {activeTab==="videos"&&(<VideosTabItem data={{}} />)}
             {activeTab==="connections"&&(<FriendList />)}

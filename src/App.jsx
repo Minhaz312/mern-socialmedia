@@ -15,7 +15,7 @@ export default function App() {
           <Route path='/' element={<Signin />} />
           <Route path='/one' element={<Home />} />
           <Route path='/search/:keyword' element={<Search />} />
-          <Route path='/profile' element={<Profile />} />
+          <Route path='/profile/:tab' element={<Profile />} />
           <Route path='/friend/call/audio/:friendId' element={<AudioCall />} />
           <Route path='/people/:peopleId' element={<People />} />
           <Route path='/messenger/:userId' element={<Messenger />} />

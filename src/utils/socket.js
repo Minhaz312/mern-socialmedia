@@ -1,9 +1,10 @@
 import {io} from 'socket.io-client'
+import { SERVER_DOMAIN } from './constants';
 
 class SocketManager {
     constructor(){
         if(!this.socket){
-            this.socket = io("https://tubebook.onrender.com"); // ws://localhost:8080
+            this.socket = io(SERVER_DOMAIN); // ws://localhost:8080
         }
     }
     getSocket() {

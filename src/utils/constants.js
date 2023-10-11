@@ -1,8 +1,8 @@
 import getAuthToken from "../helpers/getAuthToken"
 
-const SERVER_DOMAIN="https://tubebook.onrender.com"
 const prod = true
-const API_URL=prod?`${SERVER_DOMAIN}/api`:"http://localhost:8080/api"
+const SERVER_DOMAIN=prod?"https://tubebook.onrender.com":"http://localhost:8080"
+const API_URL=`${SERVER_DOMAIN}/api`
 
 const {user} = getAuthToken()
 
@@ -21,6 +21,7 @@ const CHAT_EVENTS_NAME = {
 
 export {
     API_URL,
+    SERVER_DOMAIN,
     FRIENDSHIP_STATUS,
     CHAT_EVENTS_NAME
 }

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import {BiSearch} from "react-icons/bi"
+import {BsChatDotsFill} from "react-icons/bs"
 import {IoClose, IoNotifications} from "react-icons/io5"
 import { useGetAuthUserQuery } from '../../../store/services/user'
 import UserProfileImageRenderer from './UserProfileImageRenderer'
@@ -98,6 +99,9 @@ export default function TopBar() {
         <div className='flex items-center gap-x-1 md:gap-x-3'>
           <div className='block md:hidden'>
             <button className={`relative w-[35px] h-[35px] rounded-full text-[25px] p-2 flex justify-center items-center transition-all ${showMobileSearch?"bg-blue-500/20 ring-1 text-blue-500":"text-slate-300 bg-slate-700"} hover:bg-blue-500/20 hover:ring-1 hover:text-blue-500`} onClick={handleShowMobileSearch}><BiSearch size={20} /></button>
+          </div>
+          <div className=''>
+            <Link to="/profile/messenger" className={`relative w-[35px] h-[35px] rounded-full text-[25px] p-2 flex justify-center items-center transition-all ${showMobileSearch?"bg-blue-500/20 ring-1 text-blue-500":"text-slate-300 bg-slate-700"} hover:bg-blue-500/20 hover:ring-1 hover:text-blue-500`}><BsChatDotsFill size={20} /></Link>
           </div>
           <div className='relative' >
             <button onClick={handleShowNotificationList} className={`relative w-[35px] h-[35px] rounded-full text-[25px] p-2 flex justify-center items-center transition-all ${showNotificationList?"bg-blue-500/20 ring-1 text-blue-500":"text-slate-300 bg-slate-700"} hover:bg-blue-500/20 hover:ring-1 hover:text-blue-500`}>
