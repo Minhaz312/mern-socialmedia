@@ -1,6 +1,6 @@
 import getAuthToken from "../helpers/getAuthToken"
 
-const prod = false
+const prod = true
 const SERVER_DOMAIN=prod?"https://tubebook.onrender.com":"http://localhost:8080"
 const API_URL=`${SERVER_DOMAIN}/api`
 
