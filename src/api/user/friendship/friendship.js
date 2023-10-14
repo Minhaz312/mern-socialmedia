@@ -47,8 +47,7 @@ export const acceptFriendshipRequest = (friendId,cb) => {
 export const getFriendsByChat = (page=0) => {
     return new Promise(async(resolve,reject)=>{
         const res = await axios.get(`${url}/get/by/chat/${page}`,{headers:jsonHeaders});
-        console.log('res of friend list by chat: ',res)
-        resolve("asdf")
+        resolve(res)
     })
 }
 

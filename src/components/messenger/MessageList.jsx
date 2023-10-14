@@ -6,39 +6,47 @@ import { CHAT_EVENTS_NAME } from '../../utils/constants'
 import getAuthToken from '../../helpers/getAuthToken'
 
 export default function MessageList() {
+    const {user} = getAuthToken()
 
     const messageBoxListDiv = useRef(null)
 
     const [isTyping, setIsTyping] = useState(false)
-    const chatList = useSelector(state=>state.chatList.data)
+    const chatList = useSelector(state=>state.chatList)
     const chatFriend = useSelector(state=>state.chatList.inboxActivefriend)
 
 
     
     useEffect(()=>{
-        const {user} = getAuthToken()
         socket.getSocket().on(`${user}-chat-friend-typing`,data=>{
-            console.log('tying evnt: ',data)
             if(data.userId.toString()===chatFriend.friendId.toString()){
                 setIsTyping(true)
             }
         })
         socket.getSocket().on(`${user}-chat-friend`,data=>{
-            console.log('tying evnt: ',data)
-            if(data.userId.toString()===chatFriend.friendId.toString()){
-                setIsTyping(false)
+            console.log('stop typing')
+            setIsTyping(false)
+            if(messageBoxListDiv.current!==null) {
+                messageBoxListDiv.current.scrollIntoView({block:"end"})
             }
         })
         if(messageBoxListDiv.current!==null) {
-            messageBoxListDiv.current.scrollIntoView({behavior:"smooth",block:"end"})
+            messageBoxListDiv.current.scrollIntoView({block:"end"})
         }
-    },[socket.getSocket()])
+        console.log('scroll down')
+    },[])
     useEffect(()=>{
         if(messageBoxListDiv.current!==null) {
-            messageBoxListDiv.current.scrollIntoView({behavior:"smooth",block:"end"})
+            messageBoxListDiv.current.scrollIntoView({block:"end"})
         }
-    },[chatList])
-    const friendChatBox = chatList.filter(friend=>friend.friendId===chatFriend.friendId)[0]
+        console.log('scroll down for asdf')
+    },[isTyping,chatList])
+    const friendChatBox = chatList.data.filter(friend=>friend.friendId===chatFriend.friendId)[0]
+    if(chatList.isLoading){
+        return "loading..."
+    }
+    if(friendChatBox===undefined){
+        return "friendChatBoxUndefined"
+    }
     if(friendChatBox.messageList.length<1){
         return (
             <div className='h-[90%]'>
@@ -69,21 +77,22 @@ export default function MessageList() {
                             </div>
                         </div>
                     </div>
-                }
-                return <div key={i} className='w-full my-2'>
-                    <div className='flex gap-x-3 w-[70%] md:w-[45%]'>
-                        {showProfile&&(<div>
-                            {chatFriend.friend_image!==null&&(<img src={chatFriend.friend_image} className='h-[40px] w-[40px] rounded-full' />)}
-                            {chatFriend.friend_image===null&&(<div className='h-10 w-10 bg-primary border border-slate-500 uppercase text-md font-semibold dark:bg-secondary-1 rounded-full flex justify-center items-center'>
-                                {chatFriend.friend_name.substring(0,2)}
+                }else{
+                    return <div key={i} className='w-full my-2'>
+                        <div className='flex gap-x-3 w-[70%] md:w-[45%]'>
+                            {showProfile&&(<div>
+                                {chatFriend.friend_image!==null&&(<img src={chatFriend.friend_image} className='h-[40px] w-[40px] rounded-full' />)}
+                                {chatFriend.friend_image===null&&(<div className='h-10 w-10 bg-primary border border-slate-500 uppercase text-md font-semibold dark:bg-secondary-1 rounded-full flex justify-center items-center'>
+                                    {chatFriend.friend_name.substring(0,2)}
+                                </div>)}
                             </div>)}
-                        </div>)}
-                        <div>
-                            <p className={`bg-slate-200 ${!showProfile&&"ml-[50px]"} dark:bg-slate-600 font-[450] p-3 text-[16px] rounded-xl`}>{item.message}</p>
-                            {i===friendChatBox.messageList.length-1&&(<p className='block text-sm dark:text-slate-400 text-slate-700'>{format(item.createdAt)}</p>)}
+                            <div>
+                                <p className={`bg-slate-200 ${!showProfile&&"ml-[50px]"} dark:bg-slate-600 font-[450] p-3 text-[16px] rounded-xl`}>{item.message}</p>
+                                {i===friendChatBox.messageList.length-1&&(<p className='block text-sm dark:text-slate-400 text-slate-700'>{format(item.createdAt)}</p>)}
+                            </div>
                         </div>
                     </div>
-                </div>
+                }
             })
         } 
         <div className={`gap-x-2 items-center ${isTyping?"flex":"hidden"}`}>

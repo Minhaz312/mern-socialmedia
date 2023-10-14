@@ -3,7 +3,6 @@ import BioSideBar from '../people/BioSideBar'
 import Modal from '../cs-ui-components/modal/Modal'
 
 export default function ProfileTabItem({data}) {
-  console.log('profile tab data: ',data)
   const [show, setShow] = useState(false)
   const handleOpenEditBioModal = () => {
     if(show) setShow(false)

@@ -11,27 +11,25 @@ const friendListSlice = createSlice({
     name:"friendListSlice",
     initialState,
     reducers:{
-        initialize:(state)=>{
+        setLoadingChatFriends:(state)=>{
             state.isLoading = true
         },
-        storeFriendList: (state,payload) => {
-            console.log("payload")
-            if(payload.operation==="success"){
+        storeChatFriendList: (state,action) => {
+            if(action.payload.operation==="success"){
                 state.isLoading = false,
                 state.isSuccess = true
-                state.data = payload.data
+                state.data = action.payload.data
             }else{
                 state.isLoading = false,
                 state.isError = true
             }
         },
-        deleteAFriend: (state,payload) => {
-            const newList = state.data.filter(f=>f.friendId!==payload.friendId);
-            state.data = newList
+        updateChatFriendList: (state,action) => {
+            state.data = action.payload;
         }
     }
 })
 
-export const { deleteAFriend, initialize, storeFriendList } = friendListSlice.actions
+export const { setLoadingChatFriends, storeChatFriendList, updateChatFriendList } = friendListSlice.actions
 
-export default friendListSlice;
+export default friendListSlice.reducer;

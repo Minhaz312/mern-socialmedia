@@ -57,23 +57,23 @@ export default function People() {
         <div className='w-[80%] flex flex-col justify-between h-full overflow-y-auto'>
             <div className='bg-white dark:bg-secondary-2 shadow-sm p-2 flex justify-between'>
                 <div className='flex gap-x-3'>
-                  <TopTabButton onClick={()=>setActiveTab("recent")} active={activeTab==="recent"?true:false}>
+                  <TopTabButton onClick={()=>setActiveTab("recent")} isActive={activeTab==="recent"?true:false}>
                     <AiFillClockCircle />
                     <p>Recent</p>
                   </TopTabButton>
-                  <TopTabButton onClick={()=>setActiveTab("videos")} active={activeTab==="videos"?true:false}>
+                  <TopTabButton onClick={()=>setActiveTab("videos")} isActive={activeTab==="videos"?true:false}>
                     <BiSolidVideos />
                     <p>Videos</p>
                   </TopTabButton>
-                  <TopTabButton onClick={()=>setActiveTab("video-playlist")} active={activeTab==="video-playlist"?true:false}>
+                  <TopTabButton onClick={()=>setActiveTab("video-playlist")} isActive={activeTab==="video-playlist"?true:false}>
                     <LuListVideo />
                     <p>Video PlayList</p>
                   </TopTabButton>
-                  <TopTabButton onClick={()=>setActiveTab("posts")} active={activeTab==="posts"?true:false}>
+                  <TopTabButton onClick={()=>setActiveTab("posts")} isActive={activeTab==="posts"?true:false}>
                     <BsPostcardHeartFill />
                     <p>Posts</p>
                   </TopTabButton>
-                  {people.friendshipStatus===1&&(<TopTabButton onClick={()=>setActiveTab("inbox")} active={activeTab==="inbox"?true:false}>
+                  {people.friendshipStatus===1&&(<TopTabButton onClick={()=>setActiveTab("inbox")} isActive={activeTab==="inbox"?true:false}>
                     <BsChatDotsFill />
                     <p>Inbox</p>
                   </TopTabButton>)}

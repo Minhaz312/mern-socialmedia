@@ -2,8 +2,8 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
     loading:false,
-    data:undefined,
-    inboxActivefriend:undefined
+    data:undefined, // selected friend inbox with chat
+    inboxActivefriend:undefined // friend data
 }
 // data = [
 //     {
@@ -26,7 +26,7 @@ const chatListSlice = createSlice({
                 const index = state.data.findIndex(chat=>chat.friendId===action.payload.friendId)
                 let oldList = state.data;
                 oldList.splice(index,1)
-                state.data = [...oldList,action.payload]
+                state.data = [action.payload,...oldList]
             }
         },
         setActiveMessengerFriend: (state,action) => {

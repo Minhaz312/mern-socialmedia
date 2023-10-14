@@ -9,13 +9,19 @@ import socket from '../../utils/socket'
 import getAuthToken from '../../helpers/getAuthToken'
 import { BiImageAdd } from 'react-icons/bi'
 import { FaFileUpload } from 'react-icons/fa'
+import { updateChatFriendList } from '../../store/slice/chatFriendListSlice'
 
 export default function Inbox() {
   const inputRef = useRef(null)
-  const [message, setMessage] = useState("")
-  const activeMessengerFriend = useSelector(state=>state.chatList.inboxActivefriend)
-  const chatList = useSelector(state=>state.chatList)
   const dispatch = useDispatch()
+
+  const activeMessengerFriend = useSelector(state=>state.chatList.inboxActivefriend)
+  const chatFriendList = useSelector(state=>state.chatFriendList)
+
+  const [message, setMessage] = useState("")
+
+  const chatList = useSelector(state=>state.chatList)
+  
     const handleSendMessage = async () => {
       if(inputRef.current!==null) {
         inputRef.current.focus()
@@ -30,9 +36,19 @@ export default function Inbox() {
             const newChat = res.data.data
             if(friendChatBox.messageList.length>0){
                 dispatch(addMoreChatIntoAChat({friendId:friendChatBox.friendId,messageList:[...friendChatBox.messageList,newChat]}))
-              }else{
-                dispatch(addNewChatIntoList({friendId:friendChatBox.friendId,messageList:[newChat]})) 
+            }else{
+              dispatch(addNewChatIntoList({friendId:friendChatBox.friendId,messageList:[newChat]})) 
+            }
+            if(chatFriendList.data!==null&&chatFriendList.data!==undefined){
+              const friend = chatFriendList.data.filter(fr=>fr.friendId.toString()===newChat.friendId.toString())
+              if(friend.length>0){
+                let friendIndex = chatFriendList.data.findIndex(fr=>fr.friendId.toString()===newChat.friendId.toString())
+                let friendList = [...chatFriendList.data];
+                friendList.splice(friendIndex,1)
+                friendList.unshift({...friend[0],lastMessage:{message:newChat.message,at:newChat.createdAt,by:newChat.userId}});
+                dispatch(updateChatFriendList(friendList))
               }
+            }
           }else{
             console.log('chat list undefined')
           }

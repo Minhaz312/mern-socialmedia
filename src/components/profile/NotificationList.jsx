@@ -6,8 +6,6 @@ export default function NotificationList() {
 
   const [getNotification,result] = useGetNotificationMutation()
   const {data:notificationList,isLoading} = result;
-  console.log('notification result: ',result)
-  console.log('notification list: ',notificationList)
 
   const [allNotification, setAllNotification] = useState([])
   const [readNotification, setReadNotification] = useState([])

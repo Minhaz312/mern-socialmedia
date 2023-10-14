@@ -45,8 +45,6 @@ export default function FriendList({list,page=0}) {
     })
     setFriendList(connectionBlocked)
   }
-console.log('friendList: ',friendList)
-  // useEffect(()=>{},[friendList])
 
   return (
       <div className='w-full h-full my-3 grid grid-cols-12 gap-x-3 items-start'>

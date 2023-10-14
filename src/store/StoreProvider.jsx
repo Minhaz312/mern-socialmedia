@@ -3,21 +3,15 @@ import { Provider } from 'react-redux'
 import { configureStore } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/dist/query'
 import { userApi } from './services/user'
-import friendListSlice from './slice/friendListSlice'
+import chatFriendListSlice from './slice/chatFriendListSlice'
 import { friendshipApi } from './services/friendship'
 import { notificationApi } from './services/notification'
 import chatListSlice from './slice/chatListSlice'
 
 
-const sliceStore =  configureStore({
-  reducer: {
-    friendList: friendListSlice,
-    chatList:chatListSlice,
-  }
-})
 const store =  configureStore({
   reducer: {
-    friendList: friendListSlice,
+    chatFriendList: chatFriendListSlice,
     chatList:chatListSlice,
     [userApi.reducerPath]:userApi.reducer,
     [friendshipApi.reducerPath]:friendshipApi.reducer,

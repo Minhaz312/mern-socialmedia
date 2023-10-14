@@ -59,8 +59,8 @@ export default function Profile() {
       else setShowProfileNavOptionModal(true)
     }
     const ProfileNavigationList = () => {
-      return profileNaviations.map((item,i)=><Link to={`/profile/${item.name.toLowerCase()}`}>
-        <TopTabButton key={i} onClick={()=>setActiveTab(item.name.toLowerCase())} active={activeTab===item.name.toLowerCase()?true:false}>
+      return profileNaviations.map((item,i)=><Link key={i} to={`/profile/${item.name.toLowerCase()}`}>
+        <TopTabButton onClick={()=>setActiveTab(item.name.toLowerCase())} active={activeTab===item.name.toLowerCase()?true:false}>
           {item.icon()}
           <span>{item.name}</span>
         </TopTabButton>
@@ -90,32 +90,34 @@ export default function Profile() {
           <BioSideBar people={data.data.user} />
         </div>
         <div className='w-full xl:w-[80%] h-full flex flex-col justify-between'>
-            <div className='bg-white dark:bg-secondary-2 shadow-sm p-2 flex justify-between items-center gap-x-3 gap-y-2'>
-                <p className="capitalize font-semibold text-slate-200">{activeTab}</p>
-                <div className='flex flex-wrap gap-x-3 gap-y-2 lg:hidden'>
-                  {profileNaviations.map((item,i)=>{
-                    if(item.responsiveTab){
-                      return <Link key={i} to={`/profile/${item.name.toLowerCase()}`} className={`px-2 ${activeTab===item.name.toLowerCase()?"text-blue-600":"text-slate-600 dark:text-white"} flex justify-center items-center blue-btn`} active={activeTab==="profile"?true:false}>
-                      {item.icon()}
-                    </Link>
-                    }
-                  })}
-                  <button className='px-2 py-1' onClick={handleShowProfileNavOptionModal}>
-                    <FaBars />
-                  </button>
-                </div>
-                <div className='hidden flex-wrap gap-x-3 gap-y-2 lg:flex'>
-                  <div className='block xl:hidden'>
-                    <Link to="/profile/profile">
-                      <TopTabButton onClick={()=>setActiveTab("profile")} active={activeTab==="profile"?true:false}>
-                        <BiUser />
-                        <span>Profile</span>
-                      </TopTabButton>
-                    </Link>
+            {location.pathname!=="/profile/messenger"&&(
+              <div className='bg-white dark:bg-secondary-2 shadow-sm p-2 flex justify-between items-center gap-x-3 gap-y-2'>
+                  <p className="capitalize font-semibold text-slate-200">{activeTab}</p>
+                  <div className='flex flex-wrap gap-x-3 gap-y-2 lg:hidden'>
+                    {profileNaviations.map((item,i)=>{
+                      if(item.responsiveTab){
+                        return <Link key={i} to={`/profile/${item.name.toLowerCase()}`} className={`px-2 ${activeTab===item.name.toLowerCase()?"text-blue-600":"text-slate-600 dark:text-white"} flex justify-center items-center blue-btn`}>
+                        {item.icon()}
+                      </Link>
+                      }
+                    })}
+                    <button className='px-2 py-1' onClick={handleShowProfileNavOptionModal}>
+                      <FaBars />
+                    </button>
                   </div>
-                  <ProfileNavigationList />
-                </div>
-            </div>
+                  <div className='hidden flex-wrap gap-x-3 gap-y-2 lg:flex'>
+                    <div className='block xl:hidden'>
+                      <Link to="/profile/profile">
+                        <TopTabButton onClick={()=>setActiveTab("profile")} active={activeTab==="profile"?true:false}>
+                          <BiUser />
+                          <span>Profile</span>
+                        </TopTabButton>
+                      </Link>
+                    </div>
+                    <ProfileNavigationList />
+                  </div>
+              </div>
+            )}
             {activeTab==="profile"&&(<div className='h-full block md:hidden overflow-x-hidden overflow-y-auto'>
               <ProfileTabItem data={data.data} />
             </div>)}
