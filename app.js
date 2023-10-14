@@ -12,7 +12,7 @@ import AuthMiddleware from './middleware/AuthMiddleware.js';
 import socketManager from './utils/socketManager.js';
 import createRandomUser, { generatePass } from './helper/seed-data/seedUser.js';
 
-const production = false;
+const production = true;
 const CLIENT_URL = production===true?"https://tubebook.vercel.app":"http://localhost:5173"
 const app = express()
 const server = http.createServer(app);
