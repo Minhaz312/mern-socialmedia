@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema, now } from "mongoose";
 
 const FriendSchema = new Schema({
     userId:{
@@ -17,8 +17,18 @@ const FriendSchema = new Schema({
         type:String,
         required:true,
     },
+    onlineStatus:{type:Boolean,required:false,default:null},
     requestedBy:{type:mongoose.Types.ObjectId,required:true},
     accepted:{type:Boolean,default:false},
+    lastMessage:{
+        type:{
+            message:{type:String,required:true},
+            by:{type:mongoose.Types.ObjectId,required:true},
+            at:{type:Date,default:now()},
+            seen:{type:Boolean,default:false}
+        },
+        default:null
+    },
     friend_image:{
         type:String,
         default:null

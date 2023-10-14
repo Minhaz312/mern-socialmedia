@@ -1,20 +1,21 @@
 import mongoose, { Schema } from 'mongoose'
 const chatSchema = new Schema({
     userId:{type:mongoose.Types.ObjectId},
-    messagedBy:{type:mongoose.Types.ObjectId},
-    friendId:{type:mongoose.Types.ObjectId},
+    messagedBy:{type:mongoose.Types.ObjectId,index:true},
+    friendId:{type:mongoose.Types.ObjectId,index:true},
     messageType:{type:String,enums:["TEXT","MEDIA","AUDIO_CALL","AUDIO","VIDEO_CALL"],default:"TEXT"},
     media:{
         type: new Schema({
             type:{type:String,required:true},
             link:{type:String,required:true}
         },{versionKey:false,_id:false}),
-        default:null
+        default:null,
+        index:true
     },
     audioCallDuration:{type:Number,default:null},
     videoCallDuration:{type:Number,default:null},
     audioDuration:{type:Number,default:null},
-    message:String,
+    message:{type:String,required:true,index:true},
     reactions:[
         {
             type:{

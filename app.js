@@ -12,17 +12,18 @@ import AuthMiddleware from './middleware/AuthMiddleware.js';
 import socketManager from './utils/socketManager.js';
 import createRandomUser, { generatePass } from './helper/seed-data/seedUser.js';
 
+const production = false;
+const CLIENT_URL = production===true?"https://tubebook.vercel.app":"http://localhost:5173"
 const app = express()
 const server = http.createServer(app);
 
 app.use(express.json())
 
-app.use(cors({origin:"https://tubebook.vercel.app"}))
+app.use(cors({origin:CLIENT_URL}))
 
 main().then(console.log("database runnig...")).catch(err => console.log(err));
 
 async function main() {
-  const production = true;
   if(process.env.NODE_ENV == "production" || production){
     console.log('runing on production')
     await mongoose.connect(process.env.MONGODB_URL);
@@ -33,7 +34,7 @@ async function main() {
 }
 
 const io = new Server(server,{
-  cors:{origin:"https://tubebook.vercel.app"}
+  cors:{origin:CLIENT_URL}
 })
 io
 io.on("connection",(socket)=>{

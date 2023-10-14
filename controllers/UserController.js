@@ -94,6 +94,30 @@ userFeatures.getUserById = async (req,res) => {
         res.json({success:false,data:{}})
     }
 }
+export const setOnlineStatus = async (userId,status=true) => {
+    try {
+        console.log('online true')
+        await UserModel.updateOne({_id:mongoose.Types.ObjectId(userId)},{onlineStatus:true})
+        const res = await FriendListModel.updateMany({friendId:mongoose.Types.ObjectId(userId)},{onlineStatus:true})
+        console.log('res: ',res)
+    } catch (error) {
+        console.log('error: ',error)
+    }
+}
+userFeatures.setOnlineStatus = async (req,res) => {
+    try {
+        console.log('going offline')
+        const {userId} = req.body;
+        await UserModel.updateOne({_id:mongoose.Types.ObjectId(userId)},{onlineStatus:false})
+        await FriendListModel.updateMany({friendId:mongoose.Types.ObjectId(userId)},{onlineStatus:false})
+        res.status(200)
+        res.json({success:true,message:"Offline success"})
+    } catch (error) {
+        console.log('error: ',error)
+        res.status(500)
+        res.json({success:false,message:"Failed to go offline"})
+    }
+}
 userFeatures.deleteUser = (req,res) => {
     res.json("delete user")
 }

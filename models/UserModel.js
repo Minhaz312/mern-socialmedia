@@ -33,7 +33,7 @@ const userSchema = new Schema({
             title:{type:String,required:true}
         },{timestamps:true,versionKey:false})],
         default:[]},
-    onlineStatus:{type:Boolean,required:false},
+    onlineStatus:{type:Boolean,required:false,default:null},
     password:{
         type:String,
         required:[true,"Password is required"],

@@ -11,6 +11,9 @@ userRoutes.get("/get/:userId",AuthMiddleware,userFeatures.getUserById)
 userRoutes.put("/update/:userId",AuthMiddleware,userFeatures.updateUser)
 userRoutes.delete("/delete/:userId",AuthMiddleware,userFeatures.deleteUser)
 
+
+userRoutes.post("/offline",AuthMiddleware,userFeatures.setOnlineStatus)
+
 userRoutes.post("/login",userFeatures.loginUser)
 userRoutes.get("/logout",AuthMiddleware,userFeatures.logoutUser)
 

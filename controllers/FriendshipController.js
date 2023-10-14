@@ -45,14 +45,9 @@ export const getPaginatedFriends = async (req,res) => {
             friendIdList.push({friendId:fr._id,userId:mongoose.Types.ObjectId(req.body.myId)})
             friendIdList.push({userId:fr._id,friendId:mongoose.Types.ObjectId(req.body.myId)})
         })
-        // const lastMessageOfEachFriend = await ChatModel.findMany({
-        //     friendId:{$in:friendIdList},
-        //     friendId:{$in:friendIdList},
-        // })
-        // console.log('lastMessageOfEachFriend: ',lastMessageOfEachFriend)
         if(friendList.length>0){
             friendList.map(friend=>{
-                const friendData = {_id:friend._id,userId:friend.userId,friendId:friend.friendId,friend_name:friend.friend_name,friend_mail:friend.friend_mail,requestedBy:friend.requestedBy,accepted:friend.accepted,friend_image:friend.friend_image,createdAt:friend.createdAt,updatedAt:friend.updatedAt}
+                const friendData = {_id:friend._id,userId:friend.userId,friendId:friend.friendId,friend_name:friend.friend_name,friend_mail:friend.friend_mail,requestedBy:friend.requestedBy,accepted:friend.accepted,lastMessage:friend.lastMessage===undefined?null:friend.lastMessage,friend_image:friend.friend_image,createdAt:friend.createdAt,updatedAt:friend.updatedAt}
                 if(friend.accepted){
                     formatedFriendList.push({...friendData,requestStatus:FRIENDSHIP_STATUS.FRIEND})
                 }else{
@@ -74,60 +69,34 @@ export const getPaginatedFriends = async (req,res) => {
 }
 
 
-export const getPaginatedFriendByChat = async (req,res) => {
+export const getPaginatedFriendsByChat = async (req,res) => {
     try {
         const {page} = req.params;
-        const take = 12
+        const take = 24
         const skip = Number(page)*take
-        // last take=12 chat list
-        const lastTakeChatList = await ChatModel.aggregate([
-            {
-                $match:{
-                    $or:[
-                        {userId:mongoose.Types.ObjectId(req.body.myId)},
-                        {friendId:mongoose.Types.ObjectId(req.body.myId)}
-                    ]
-                }
-            },
-            {
-                $group:{
-                    _id:"$friendId"
-                }
-            },
-            {$sort: {_id: 1}},
-            {$limit:take},
-            {$skip:skip}
-        ])
+        const friendList = await FriendListModel.find({userId:mongoose.Types.ObjectId(req.body.myId)}).skip(skip).limit(take).sort({"lastMessage.at":-1});
+        let formatedFriendList = []
         let friendIdList = []
-        console.log('lastTakeChatList: ',lastTakeChatList)
-        lastTakeChatList.map(fr=>{
-            if(fr._id.toString()!=req.body.myId.toString()){
-                friendIdList.push({userId:mongoose.Types.ObjectId(req.body.myId),friendId:fr._id})
-            }
+        friendList.map(fr=>{
+            friendIdList.push({friendId:fr._id,userId:mongoose.Types.ObjectId(req.body.myId)})
+            friendIdList.push({userId:fr._id,friendId:mongoose.Types.ObjectId(req.body.myId)})
         })
-        // console.log('lastTakeChatList: ',lastTakeChatList)
-        console.log('friendIdList: ',friendIdList)
-        const friendList = await FriendListModel.find({$in:friendIdList});
-        console.log('friendList by lastTakeChatList: ',friendList)
-        // console.log('friendList by chat: ',friendList)
-        // TODO::assign last message to each friend
-        // let formatedFriendList = []
-        // if(friendList.length>0){
-        //     friendList.map(friend=>{
-        //         const friendData = {_id:friend._id,userId:friend.userId,friendId:friend.friendId,friend_name:friend.friend_name,friend_mail:friend.friend_mail,requestedBy:friend.requestedBy,accepted:friend.accepted,friend_image:friend.friend_image,createdAt:friend.createdAt,updatedAt:friend.updatedAt}
-        //         if(friend.accepted){
-        //             formatedFriendList.push({...friendData,requestStatus:FRIENDSHIP_STATUS.FRIEND})
-        //         }else{
-        //             if(friend.requestedBy.toString()==req.body.myId.toString()){
-        //                 formatedFriendList.push({...friendData,requestStatus:FRIENDSHIP_STATUS.REQUESTED_BY_ME})
-        //             }else{
-        //                 formatedFriendList.push({...friendData,requestStatus:FRIENDSHIP_STATUS.REQUESTED_BY_FRIEND})
-        //             }
-        //         }
-        //     })
-        // }
+        if(friendList.length>0){
+            friendList.map(friend=>{
+                const friendData = {_id:friend._id,userId:friend.userId,friendId:friend.friendId,friend_name:friend.friend_name,friend_mail:friend.friend_mail,requestedBy:friend.requestedBy,accepted:friend.accepted,lastMessage:friend.lastMessage===undefined?null:friend.lastMessage,onlineStatus:friend.onlineStatus,friend_image:friend.friend_image,createdAt:friend.createdAt,updatedAt:friend.updatedAt}
+                if(friend.accepted){
+                    formatedFriendList.push({...friendData,requestStatus:FRIENDSHIP_STATUS.FRIEND})
+                }else{
+                    if(friend.requestedBy.toString()==req.body.myId.toString()){
+                        formatedFriendList.push({...friendData,requestStatus:FRIENDSHIP_STATUS.REQUESTED_BY_ME})
+                    }else{
+                        formatedFriendList.push({...friendData,requestStatus:FRIENDSHIP_STATUS.REQUESTED_BY_FRIEND})
+                    }
+                }
+            })
+        }
         res.status(200)
-        res.json({success:true,data:friendList});
+        res.json({success:true,data:formatedFriendList});
     } catch (error) {
         console.log('error from get friend paginated: ',error)
         res.status(500)
@@ -138,7 +107,6 @@ export const getPaginatedFriendByChat = async (req,res) => {
 
 // DONE
 export const sendFriendRequest = async (req,res) => {
-    console.log('sending request')
     try {
         const {friendId,myId} = req.body;
         const isAlreadyFriend = await FriendListModel.findOne({userId:myId,friendId:mongoose.Types.ObjectId(friendId)}).countDocuments();

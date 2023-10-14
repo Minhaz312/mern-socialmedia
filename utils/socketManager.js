@@ -1,3 +1,4 @@
+import { setOnlineStatus } from "../controllers/UserController.js";
 import eventManager from "./EventManager.js";
 import { CHAT_EVENTS_NAME } from "./constants.js";
 export default function socketManager(socket) {
@@ -14,10 +15,8 @@ export default function socketManager(socket) {
     eventManager.on("msg-typing",(data)=>{
         socket.emit(`${data.friendId.toString()}-chat-friend-typing`,data)
     })
-    socket.on("goOnline",data=>{
-        console.log("offline data: ",data)
-    })
-    socket.on("goOffline",data=>{
-        console.log("offline data: ",data)
+    socket.on("user-online",data=>{
+        console.log("online data: ",data)
+        setOnlineStatus(data.userId)
     })
 }

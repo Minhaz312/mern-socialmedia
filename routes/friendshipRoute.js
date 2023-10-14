@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getAllFriends, acceptFriendRequest, makeUnfriend, sendFriendRequest, rejectFriendRequest, cancelFriendRequest, getPaginatedFriends, getPaginatedFriendByChat } from "../controllers/FriendshipController.js";
+import { getAllFriends, acceptFriendRequest, makeUnfriend, sendFriendRequest, rejectFriendRequest, cancelFriendRequest, getPaginatedFriends, getPaginatedFriendsByChat } from "../controllers/FriendshipController.js";
 import AuthMiddleware from "../middleware/AuthMiddleware.js";
 
 const friendshipRoutes = Router();
@@ -7,7 +7,7 @@ const friendshipRoutes = Router();
 // get friendship
 friendshipRoutes.get("/",AuthMiddleware,getAllFriends)
 friendshipRoutes.get("/get/:page",AuthMiddleware,getPaginatedFriends)
-friendshipRoutes.get("/get/by/chat/:page",AuthMiddleware,getPaginatedFriendByChat)
+friendshipRoutes.get("/get/by/chat/:page",AuthMiddleware,getPaginatedFriendsByChat)
 
 // friendship request handling
 friendshipRoutes.post("/request/send",AuthMiddleware,sendFriendRequest)
